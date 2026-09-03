@@ -1,0 +1,796 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: #f2f6f3;
+    color: #1f2933;
+}
+
+.container {
+    width: 100%;
+    max-width: 1050px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.logo-area {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.logo-area h1 {
+    color: #00843d;
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.logo-area p {
+    color: #64748b;
+}
+
+.progress-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 35px;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 70px;
+}
+
+.progress-step span {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5e7eb;
+    color: #64748b;
+    font-weight: bold;
+}
+
+.progress-step.active span,
+.progress-step.completed span {
+    background: #00843d;
+    color: #ffffff;
+}
+
+.progress-step small {
+    color: #64748b;
+    font-size: 12px;
+}
+
+.progress-line {
+    height: 3px;
+    width: 70px;
+    background: #e5e7eb;
+}
+
+.progress-line.active {
+    background: #00843d;
+}
+
+h2 {
+    color: #1f2933;
+    margin: 25px 0 18px;
+    font-size: 21px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label,
+.question-group > label,
+.check-question > label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 16px;
+    outline: none;
+    background: #ffffff;
+}
+
+input:focus,
+select:focus {
+    border-color: #00843d;
+    box-shadow: 0 0 0 3px rgba(0, 132, 61, 0.1);
+}
+
+.input-error {
+    border-color: #dc2626 !important;
+}
+
+.field-error {
+    color: #dc2626;
+    display: block;
+    margin-top: 5px;
+}
+
+.question-group,
+.check-question {
+    margin-bottom: 22px;
+    padding: 18px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #fafcfb;
+}
+
+/* ============================================================
+   BOTÕES SIM / NÃO / N/A
+   ============================================================ */
+
+.choice-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.choice-button {
+    flex: 1;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.choice-button input {
+    display: none;
+}
+
+.choice-button span {
+    width: 100%;
+    min-height: 50px;
+    padding: 12px 18px;
+    border-radius: 9px;
+    border: 2px solid #d1d5db;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.choice-button span:hover {
+    border-color: #00843d;
+    background: #f0faf4;
+}
+
+.choice-button input:checked + span {
+    background: #00843d;
+    border-color: #00843d;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+
+.btn-primary,
+.btn-secondary {
+    border: none;
+    border-radius: 9px;
+    padding: 14px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+.btn-primary {
+    background: #00843d;
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background: #006f34;
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background: #d1d5db;
+}
+
+.button-row {
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.button-row .btn-primary,
+.button-row .btn-secondary {
+    flex: 1;
+}
+
+.checklist-intro {
+    background: #f0faf4;
+    border-left: 4px solid #00843d;
+    padding: 16px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+}
+
+.checklist-intro h2 {
+    margin-top: 0;
+}
+
+.checklist-intro p {
+    color: #475569;
+    line-height: 1.5;
+}
+
+/* ============================================================
+   CONFIRMAÇÃO
+   ============================================================ */
+
+.summary-section {
+    margin-bottom: 25px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.summary-section h2 {
+    background: #00843d;
+    color: #ffffff;
+    padding: 14px 18px;
+    margin: 0;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 18px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.summary-item:last-child {
+    border-bottom: none;
+}
+
+.summary-item strong {
+    color: #475569;
+}
+
+.summary-item span {
+    text-align: right;
+}
+
+.signature-section {
+    margin-top: 30px;
+}
+
+.signature-section p {
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+#signatureCanvas {
+    width: 100%;
+    max-width: 700px;
+    height: 220px;
+    border: 2px dashed #94a3b8;
+    border-radius: 10px;
+    background: #ffffff;
+    touch-action: none;
+    display: block;
+}
+
+.stamp-area {
+    margin: 20px 0;
+}
+
+.carimbo {
+    width: 220px;
+    min-height: 80px;
+    border: 2px solid #00843d;
+    color: #00843d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-2deg);
+    text-align: center;
+    padding: 10px;
+}
+
+.carimbo strong {
+    font-size: 14px;
+}
+
+.carimbo span {
+    font-size: 11px;
+    margin-top: 4px;
+}
+
+.message {
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+}
+
+.message.error {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.success-card {
+    text-align: center;
+    max-width: 600px;
+    margin: 50px auto;
+}
+
+.success-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #00843d;
+    color: #ffffff;
+    font-size: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px;
+}
+
+.success-card h1 {
+    color: #00843d;
+    margin-bottom: 15px;
+}
+
+.success-card p {
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.success-card .btn-primary {
+    margin-top: 25px;
+}
+
+/* ============================================================
+   RESPONSIVO
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .container {
+        padding: 15px;
+    }
+
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .logo-area h1 {
+        font-size: 24px;
+    }
+
+    .progress-step {
+        min-width: 45px;
+    }
+
+    .progress-step small {
+        font-size: 9px;
+    }
+
+    .progress-step span {
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
+    }
+
+    .progress-line {
+        width: 25px;
+    }
+
+    .choice-buttons {
+        flex-direction: column;
+    }
+
+    .choice-button {
+        width: 100%;
+        flex: none;
+    }
+
+    .choice-button span {
+        min-height: 52px;
+    }
+
+    .button-row {
+        flex-direction: column;
+    }
+
+    .summary-item {
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .summary-item span {
+        text-align: left;
+    }
+
+    #signatureCanvas {
+        height: 180px;
+    }
+}
+
+/* =========================================================
+   PAINÉIS DE REVISÃO
+   ========================================================= */
+
+.review-panels {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+}
+
+.review-panel {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+}
+
+.review-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #edf1f5;
+}
+
+.review-panel-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+    background: #eef8f1;
+    color: #16803c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.review-panel-header h3 {
+    margin: 0;
+    color: #17212b;
+    font-size: 20px;
+}
+
+.review-panel-header p {
+    margin: 4px 0 0;
+    color: #718096;
+    font-size: 13px;
+}
+
+.review-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.review-answer-card {
+    background: #f8fafc;
+    border: 1px solid #e5eaf0;
+    border-radius: 12px;
+    padding: 15px 16px;
+    min-height: 74px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    transition: 0.2s ease;
+}
+
+.review-answer-card:hover {
+    border-color: #b8d9c2;
+    background: #fbfefc;
+    transform: translateY(-1px);
+}
+
+.review-answer-label {
+    color: #718096;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.review-answer-value {
+    color: #17212b;
+    font-size: 15px;
+    font-weight: 700;
+    word-break: break-word;
+}
+
+.review-empty {
+    color: #a0aec0;
+    font-weight: 500;
+}
+
+.review-answer-yes {
+    color: #16803c;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.review-answer-no {
+    color: #c53030;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.review-answer-neutral {
+    color: #718096;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.review-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ASSINATURA / CARIMBO
+   ========================================================= */
+
+.stamp-box {
+    min-height: 220px;
+    border: 2px dashed #b8c5cf;
+    border-radius: 18px;
+    background: #fafcfd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.stamp-box:hover {
+    border-color: #16803c;
+    background: #f5fbf7;
+}
+
+.stamp-box:focus {
+    outline: none;
+    border-color: #16803c;
+    box-shadow: 0 0 0 4px rgba(22, 128, 60, 0.12);
+}
+
+.stamp-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    color: #64748b;
+}
+
+.stamp-placeholder strong {
+    color: #334155;
+    font-size: 17px;
+}
+
+.stamp-placeholder small {
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+.stamp-click-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: #eaf6ee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 27px;
+    margin-bottom: 5px;
+}
+
+
+/* =========================================================
+   CARIMBO
+   ========================================================= */
+
+.carimbo {
+    min-width: 300px;
+    max-width: 520px;
+    padding: 18px 28px;
+    border: 3px solid #b42318;
+    border-radius: 10px;
+    background: rgba(255, 250, 250, 0.96);
+    color: #b42318;
+    text-align: center;
+    transform: rotate(-1deg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.carimbo-topo {
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    border-bottom: 1px solid rgba(180, 35, 24, 0.4);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.carimbo-nome {
+    font-size: 20px;
+    font-weight: 900;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.carimbo-cpf {
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.carimbo-data {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.stamp-confirmed {
+    border-style: solid;
+    border-color: #b42318;
+}
+
+.assinatura-confirmada {
+    background: #fffafa;
+}
+
+.assinatura-realizada {
+    margin-top: 12px;
+    color: #16803c;
+    font-weight: 700;
+    text-align: center;
+}
+
+.btn-remover-assinatura {
+    display: block;
+    margin: 12px auto 0;
+    border: 0;
+    background: transparent;
+    color: #b42318;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-remover-assinatura:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   ANIMAÇÕES
+   ========================================================= */
+
+.stamp-attention {
+    animation: stampAttention 0.7s ease;
+}
+
+@keyframes stampAttention {
+
+    0% {
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.025);
+    }
+
+    60% {
+        transform: scale(0.99);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* =========================================================
+   BOTÃO FINAL
+   ========================================================= */
+
+#btnEnviar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+#btnEnviar.btn-pronto {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .review-panel {
+        padding: 17px;
+        border-radius: 14px;
+    }
+
+    .review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .carimbo {
+        min-width: 0;
+        width: 100%;
+        padding: 16px;
+    }
+
+    .carimbo-nome {
+        font-size: 17px;
+    }
+
+    .stamp-box {
+        min-height: 190px;
+    }
+}
