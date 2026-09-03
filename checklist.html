@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Checklist do Veículo</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<main class="container">
+
+<section class="card checklist-card">
+
+    <div class="logo-area">
+
+        <h1>Portal do Motorista</h1>
+
+        <p>Checklist do Veículo</p>
+
+    </div>
+
+    <div class="progress-area">
+
+        <div class="progress-step completed">
+            <span>✓</span>
+            <small>Motorista</small>
+        </div>
+
+        <div class="progress-line active"></div>
+
+        <div class="progress-step completed">
+            <span>✓</span>
+            <small>Caminhão</small>
+        </div>
+
+        <div class="progress-line active"></div>
+
+        <div class="progress-step active">
+            <span>3</span>
+            <small>Checklist</small>
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+            <span>4</span>
+            <small>Confirmação</small>
+        </div>
+
+    </div>
+
+    <div class="checklist-intro">
+
+        <h2>Inspeção do Veículo</h2>
+
+        <p>
+            Responda todas as perguntas.
+            As opções <strong>SIM</strong>,
+            <strong>NÃO</strong> e
+            <strong>N/A</strong> são válidas.
+        </p>
+
+    </div>
+
+    <form id="checklistForm">
+
+        <!-- 1 -->
+
+        <div class="check-question">
+
+            <label>
+                1. Limpo e sem resíduo? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="limpo"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="limpo"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="limpo"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 2 -->
+
+        <div class="check-question">
+
+            <label>
+                2. Isento de odores estranhos? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="odores"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="odores"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="odores"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="check-question">
+
+            <label>
+                3. Isento de umidade ou vazamento? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="umidade"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="umidade"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="umidade"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="check-question">
+
+            <label>
+                4. Isento de objetos pontiagudos? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="objetos"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="objetos"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="objetos"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="check-question">
+
+            <label>
+                5. Piso reto e sem furos? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="piso"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="piso"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="piso"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="check-question">
+
+            <label>
+                6. Réguas retas sem protuberância? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="reguas"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="reguas"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="reguas"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 7 -->
+
+        <div class="check-question">
+
+            <label>
+                7. Laterais sem furos ou rasgos? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="laterais"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="laterais"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="laterais"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 8 -->
+
+        <div class="check-question">
+
+            <label>
+                8. Teto sem furo ou rasgos? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="teto"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="teto"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="teto"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 9 -->
+
+        <div class="check-question">
+
+            <label>
+                9. Vigas do teto sem risco de corte? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="vigas"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="vigas"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="vigas"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 10 -->
+
+        <div class="check-question">
+
+            <label>
+                10. Faróis? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="farois"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="farois"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="farois"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 11 -->
+
+        <div class="check-question">
+
+            <label>
+                11. Luzes e lanternas? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="luzes"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="luzes"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="luzes"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 12 -->
+
+        <div class="check-question">
+
+            <label>
+                12. Sirene de ré? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="sirene"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="sirene"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="sirene"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 13 -->
+
+        <div class="check-question">
+
+            <label>
+                13. Madeirites e Lona? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="madeirites"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="madeirites"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="madeirites"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 14 -->
+
+        <div class="check-question">
+
+            <label>
+                14. Extintor de Incêndio? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="extintor"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="extintor"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="extintor"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 15 -->
+
+        <div class="check-question">
+
+            <label>
+                15. Paralamas? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="paralamas"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="paralamas"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="paralamas"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 16 -->
+
+        <div class="check-question">
+
+            <label>
+                16. Pneus de rodagem e step? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="pneus"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="pneus"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="pneus"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 17 -->
+
+        <div class="check-question">
+
+            <label>
+                17. Espelhos retrovisores? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="espelhos"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="espelhos"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="espelhos"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- 18 -->
+
+        <div class="check-question">
+
+            <label>
+                18. Para-choque? *
+            </label>
+
+            <div class="choice-buttons">
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="parachoque"
+                        value="Sim"
+                        required
+                    >
+                    <span>SIM</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="parachoque"
+                        value="Não"
+                    >
+                    <span>NÃO</span>
+                </label>
+
+                <label class="choice-button">
+                    <input
+                        type="radio"
+                        name="parachoque"
+                        value="N/A"
+                    >
+                    <span>N/A</span>
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <div class="button-row">
+
+            <button
+                type="button"
+                class="btn-secondary"
+                onclick="history.back()"
+            >
+                Voltar
+            </button>
+
+            <button
+                type="submit"
+                class="btn-primary"
+            >
+                Avançar
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+</main>
+
+<script src="checklist.js"></script>
+
+</body>
+
+</html>
