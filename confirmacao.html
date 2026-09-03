@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Confirmação do Cadastro</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           UTILITÁRIOS
+        ===================================================== */
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        /* =====================================================
+           REVISÃO
+        ===================================================== */
+
+        .revisao-section {
+            margin-top: 25px;
+        }
+
+        .revisao-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .revisao-header h2 {
+            margin: 0;
+        }
+
+        .btn-editar-revisao {
+            border: none;
+            background: #e9f7ef;
+            color: #147a3d;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-editar-revisao:hover {
+            background: #d8f1e2;
+        }
+
+
+        /* =====================================================
+           PAINÉIS DE REVISÃO
+        ===================================================== */
+
+        .review-panels {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .review-panel {
+            border: 1px solid #dce6df;
+            border-radius: 14px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .review-panel-full {
+            width: 100%;
+        }
+
+        .review-panel-header {
+            padding: 15px 18px;
+            background: #f1f8f3;
+            border-bottom: 1px solid #dce6df;
+        }
+
+        .review-panel-header h3 {
+            margin: 0;
+            color: #166534;
+            font-size: 18px;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            padding: 16px;
+        }
+
+        .review-card {
+            min-width: 0;
+            padding: 13px 14px;
+            border: 1px solid #e3e8e5;
+            border-radius: 10px;
+            background: #fafcfb;
+        }
+
+        .review-label {
+            display: block;
+            margin-bottom: 6px;
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        .review-value {
+            display: block;
+            color: #1f2937;
+            font-size: 15px;
+            line-height: 1.4;
+            word-break: break-word;
+        }
+
+        .resposta-sim-nao {
+            font-size: 14px;
+        }
+
+        .resposta-sim-nao.sim {
+            color: #15803d;
+        }
+
+        .resposta-sim-nao.nao {
+            color: #b91c1c;
+        }
+
+        .resposta-sim-nao.nao-informado {
+            color: #6b7280;
+        }
+
+
+        /* =====================================================
+           MODO DE EDIÇÃO
+        ===================================================== */
+
+        .modo-edicao {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #d9e2dc;
+            border-radius: 12px;
+            background: #fafdfb;
+        }
+
+        .modo-edicao.ativo {
+            display: block;
+        }
+
+        .campo-edicao {
+            margin-bottom: 16px;
+        }
+
+        .campo-edicao label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .campo-edicao input,
+        .campo-edicao select {
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 12px;
+            border: 1px solid #cfd8d2;
+            border-radius: 8px;
+            font-size: 15px;
+            background: white;
+        }
+
+        .campo-edicao input:focus,
+        .campo-edicao select:focus {
+            outline: none;
+            border-color: #168044;
+            box-shadow:
+                0 0 0 3px
+                rgba(22, 128, 68, 0.10);
+        }
+
+        .grupo-edicao {
+            margin-bottom: 25px;
+        }
+
+        .grupo-edicao h3 {
+            margin-bottom: 15px;
+            color: #166534;
+        }
+
+        .grid-edicao {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+        .acoes-edicao {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn-cancelar-edicao,
+        .btn-salvar-edicao {
+            border: none;
+            border-radius: 8px;
+            padding: 11px 18px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-cancelar-edicao {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .btn-salvar-edicao {
+            background: #168044;
+            color: white;
+        }
+
+
+        /* =====================================================
+           ASSINATURA
+        ===================================================== */
+
+        .signature-section {
+            margin-top: 30px;
+            padding: 22px;
+            border-radius: 14px;
+            background: #f8faf9;
+            border: 1px solid #dce6df;
+        }
+
+        .signature-section h2 {
+            margin-top: 0;
+        }
+
+        .signature-header {
+            margin-bottom: 15px;
+        }
+
+        .signature-header p {
+            color: #5b6470;
+            margin-bottom: 0;
+        }
+
+        .signature-instruction {
+            color: #5b6470;
+            margin-bottom: 15px;
+        }
+
+        .stamp-area {
+            width: 100%;
+        }
+
+        .stamp-box {
+            position: relative;
+            width: 100%;
+            min-height: 190px;
+            border: 2px dashed #9db5a4;
+            border-radius: 14px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            overflow: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            transition:
+                border-color 0.2s ease,
+                background 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .stamp-box:hover {
+            border-color: #168044;
+            background: #fcfffd;
+        }
+
+        .stamp-box:focus {
+            outline: none;
+            border-color: #168044;
+            box-shadow:
+                0 0 0 4px
+                rgba(22, 128, 68, 0.12);
+        }
+
+        .stamp-box.assinatura-confirmada {
+            border-style: solid;
+            border-color: #168044;
+        }
+
+        .stamp-box.assinatura-atencao {
+            border-color: #dc2626;
+            box-shadow:
+                0 0 0 5px
+                rgba(220, 38, 38, 0.10);
+        }
+
+
+        /* =====================================================
+           PLACEHOLDER
+        ===================================================== */
+
+        .stamp-placeholder {
+            text-align: center;
+            color: #7b8790;
+            pointer-events: none;
+            padding: 20px;
+        }
+
+        .stamp-placeholder strong {
+            display: block;
+            font-size: 18px;
+            color: #4b5563;
+            margin: 8px 0 6px;
+        }
+
+        .stamp-placeholder small {
+            font-size: 14px;
+        }
+
+        .stamp-click-icon {
+            display: block;
+            font-size: 32px;
+        }
+
+
+        /* =====================================================
+           CARIMBO
+        ===================================================== */
+
+        .carimbo {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                rotate(-5deg)
+                scale(1);
+
+            padding: 16px 24px;
+
+            border: 3px double #bd2929;
+            border-radius: 6px;
+
+            color: #bd2929;
+
+            background:
+                rgba(255, 255, 255, 0.92);
+
+            text-align: center;
+
+            font-family:
+                "Courier New",
+                Courier,
+                monospace;
+
+            font-weight: bold;
+            text-transform: uppercase;
+
+            line-height: 1.35;
+
+            min-width: 260px;
+            max-width: 90%;
+
+            pointer-events: none;
+
+            box-sizing: border-box;
+        }
+
+        .carimbo-topo {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .carimbo-nome {
+            font-size: 18px;
+            word-break: break-word;
+        }
+
+        .carimbo-cpf {
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .carimbo-data {
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        @keyframes baterCarimbo {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    translate(-50%, -50%)
+                    rotate(-12deg)
+                    scale(1.35);
+            }
+
+            100% {
+                opacity: 0.88;
+
+                transform:
+                    translate(-50%, -50%)
+                    rotate(-5deg)
+                    scale(1);
+            }
+        }
+
+
+        /* =====================================================
+           ASSINATURA REALIZADA
+        ===================================================== */
+
+        .assinatura-realizada {
+            margin-top: 12px;
+            color: #168044;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .btn-remover-assinatura,
+        .assinatura-remover {
+            display: block;
+            margin: 12px auto 0;
+            border: none;
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 9px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-remover-assinatura:hover,
+        .assinatura-remover:hover {
+            background: #fecaca;
+        }
+
+
+        /* =====================================================
+           MENSAGENS
+        ===================================================== */
+
+        .message {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .message.success {
+            background: #ecfdf3;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+        }
+
+        .message.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+
+        .message.info {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+
+        /* =====================================================
+           SUCESSO
+        ===================================================== */
+
+        .sucesso-cadastro {
+            padding: 30px 20px;
+            text-align: center;
+            background: #ecfdf3;
+            border: 1px solid #b7e4c7;
+            border-radius: 14px;
+            color: #166534;
+        }
+
+        .sucesso-cadastro h2 {
+            margin-top: 0;
+        }
+
+
+        /* =====================================================
+           RESPONSIVO
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .grid-edicao,
+            .review-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .revisao-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .btn-editar-revisao {
+                width: 100%;
+            }
+
+            .acoes-edicao {
+                flex-direction: column;
+            }
+
+            .btn-cancelar-edicao,
+            .btn-salvar-edicao {
+                width: 100%;
+            }
+
+            .stamp-box {
+                min-height: 220px;
+            }
+
+            .carimbo {
+                min-width: 230px;
+                padding: 14px 18px;
+            }
+
+            .carimbo-nome {
+                font-size: 16px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+        <section class="card">
+
+
+            <!-- =================================================
+                 CABEÇALHO
+            ================================================== -->
+
+            <div class="logo-area">
+
+                <h1>
+                    Confirmação
+                </h1>
+
+                <p>
+                    Revise todas as informações antes de finalizar
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROGRESSO
+            ================================================== -->
+
+            <div class="progress-area">
+
+                <div class="progress-step completed">
+
+                    <span>✓</span>
+
+                    <small>
+                        Motorista
+                    </small>
+
+                </div>
+
+
+                <div class="progress-line active"></div>
+
+
+                <div class="progress-step completed">
+
+                    <span>✓</span>
+
+                    <small>
+                        Caminhão
+                    </small>
+
+                </div>
+
+
+                <div class="progress-line active"></div>
+
+
+                <div class="progress-step completed">
+
+                    <span>✓</span>
+
+                    <small>
+                        Checklist
+                    </small>
+
+                </div>
+
+
+                <div class="progress-line active"></div>
+
+
+                <div class="progress-step active">
+
+                    <span>4</span>
+
+                    <small>
+                        Confirmação
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 REVISÃO
+            ================================================== -->
+
+            <div class="revisao-section">
+
+                <div class="revisao-header">
+
+                    <h2>
+                        Revise suas respostas
+                    </h2>
+
+                    <button
+                        type="button"
+                        id="btnEditarRespostas"
+                        class="btn-editar-revisao"
+                    >
+                        Editar respostas
+                    </button>
+
+                </div>
+
+
+                <div id="resumoCadastro"></div>
+
+
+                <!-- =============================================
+                     FORMULÁRIO DE EDIÇÃO
+                ============================================== -->
+
+                <div
+                    id="modoEdicao"
+                    class="modo-edicao"
+                >
+
+                    <div class="grupo-edicao">
+
+                        <h3>
+                            Motorista
+                        </h3>
+
+                        <div class="grid-edicao">
+
+                            <div class="campo-edicao">
+
+                                <label for="editNome">
+                                    Nome completo
+                                </label>
+
+                                <input
+                                    id="editNome"
+                                    type="text"
+                                    autocomplete="name"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editCelular">
+                                    Celular
+                                </label>
+
+                                <input
+                                    id="editCelular"
+                                    type="tel"
+                                    autocomplete="tel"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editCPF">
+                                    CPF
+                                </label>
+
+                                <input
+                                    id="editCPF"
+                                    type="text"
+                                    inputmode="numeric"
+                                    maxlength="14"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editCNH">
+                                    CNH
+                                </label>
+
+                                <input
+                                    id="editCNH"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editValidadeCnh">
+                                    Validade CNH
+                                </label>
+
+                                <input
+                                    id="editValidadeCnh"
+                                    type="date"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editCalcado">
+                                    Calçado de Segurança
+                                </label>
+
+                                <select id="editCalcado">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="Sim">
+                                        Sim
+                                    </option>
+
+                                    <option value="Não">
+                                        Não
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editTrajes">
+                                    Trajes
+                                </label>
+
+                                <select id="editTrajes">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="Sim">
+                                        Sim
+                                    </option>
+
+                                    <option value="Não">
+                                        Não
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editColete">
+                                    Colete Refletivo
+                                </label>
+
+                                <select id="editColete">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="Sim">
+                                        Sim
+                                    </option>
+
+                                    <option value="Não">
+                                        Não
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editComprovei">
+                                    App Comprovei
+                                </label>
+
+                                <select id="editComprovei">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="Sim">
+                                        Sim
+                                    </option>
+
+                                    <option value="Não">
+                                        Não
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="grupo-edicao">
+
+                        <h3>
+                            Caminhão
+                        </h3>
+
+                        <div class="grid-edicao">
+
+                            <div class="campo-edicao">
+
+                                <label for="editDt">
+                                    DT
+                                </label>
+
+                                <input
+                                    id="editDt"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editTransportadora">
+                                    Transportadora
+                                </label>
+
+                                <input
+                                    id="editTransportadora"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editPlacaCavalo">
+                                    Placa Cavalo / Truck
+                                </label>
+
+                                <input
+                                    id="editPlacaCavalo"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editPlacaCarreta01">
+                                    Placa Carreta 01
+                                </label>
+
+                                <input
+                                    id="editPlacaCarreta01"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editPlacaCarreta02">
+                                    Placa Carreta 02
+                                </label>
+
+                                <input
+                                    id="editPlacaCarreta02"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editTipoVeiculo">
+                                    Tipo Veículo
+                                </label>
+
+                                <input
+                                    id="editTipoVeiculo"
+                                    type="text"
+                                >
+
+                            </div>
+
+
+                            <div class="campo-edicao">
+
+                                <label for="editEmpilhadeira">
+                                    Autoriza Entrada de Empilhadeira?
+                                </label>
+
+                                <select id="editEmpilhadeira">
+
+                                    <option value="">
+                                        Selecione
+                                    </option>
+
+                                    <option value="Sim">
+                                        Sim
+                                    </option>
+
+                                    <option value="Não">
+                                        Não
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="grupo-edicao">
+
+                        <h3>
+                            Checklist
+                        </h3>
+
+                        <div id="camposChecklistEdicao"></div>
+
+                    </div>
+
+
+                    <div class="acoes-edicao">
+
+                        <button
+                            type="button"
+                            id="btnCancelarEdicao"
+                            class="btn-cancelar-edicao"
+                        >
+                            Cancelar
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="btnSalvarEdicao"
+                            class="btn-salvar-edicao"
+                        >
+                            Salvar respostas
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ASSINATURA
+            ================================================== -->
+
+            <div class="signature-section">
+
+                <div class="signature-header">
+
+                    <div>
+
+                        <h2>
+                            Assinatura digital
+                        </h2>
+
+                        <p>
+                            Clique no espaço abaixo para confirmar sua assinatura.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stamp-area">
+
+                    <div
+                        id="stampBox"
+                        class="stamp-box"
+                        tabindex="0"
+                        role="button"
+                        aria-label="Clique para assinar"
+                    >
+
+                        <div
+                            id="stampPlaceholder"
+                            class="stamp-placeholder"
+                        >
+
+                            <span class="stamp-click-icon">
+                                ✍
+                            </span>
+
+                            <strong>
+                                Clique aqui para assinar
+                            </strong>
+
+                            <small>
+                                Sua assinatura será registrada digitalmente
+                            </small>
+
+                        </div>
+
+
+                        <!-- =================================================
+                             CARIMBO
+                             FICA OCULTO ATÉ O CLIQUE
+                        ================================================== -->
+
+                        <div
+                            id="carimbo"
+                            class="carimbo hidden"
+                        >
+
+                            <div class="carimbo-topo">
+                                ASSINADO DIGITALMENTE
+                            </div>
+
+                            <div
+                                id="carimboNome"
+                                class="carimbo-nome"
+                            >
+                                Nome do motorista
+                            </div>
+
+                            <div
+                                id="carimboCPF"
+                                class="carimbo-cpf"
+                            >
+                                CPF
+                            </div>
+
+                            <div
+                                id="carimboData"
+                                class="carimbo-data"
+                            >
+                                Aguardando assinatura
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        id="assinaturaRealizada"
+                        class="assinatura-realizada hidden"
+                    >
+                        ✓ Assinatura confirmada
+                    </div>
+
+
+                    <button
+                        type="button"
+                        id="removerAssinatura"
+                        class="btn-remover-assinatura hidden"
+                    >
+                        Remover assinatura
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 MENSAGEM
+            ================================================== -->
+
+            <div
+                id="mensagemEnvio"
+                class="message"
+            ></div>
+
+
+            <!-- =================================================
+                 SUCESSO
+            ================================================== -->
+
+            <div
+                id="mensagemSucesso"
+                style="display:none;"
+            ></div>
+
+
+            <!-- =================================================
+                 BOTÕES
+            ================================================== -->
+
+            <div class="button-row">
+
+
+                <button
+                    type="button"
+                    id="btnEnviar"
+                    class="btn-primary"
+                    disabled
+                >
+                    Assinar e finalizar
+                </button>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+
+    <script src="confirmacao.js"></script>
+
+</body>
+
+</html>
