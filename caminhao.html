@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Informações do Caminhão</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+<body>
+
+<main class="container">
+
+    <section class="card">
+
+        <div class="logo-area">
+
+            <h1>Portal do Motorista</h1>
+
+            <p>Informações do Caminhão</p>
+
+        </div>
+
+
+        <!-- PROGRESSO -->
+
+        <div class="progress-area">
+
+            <div class="progress-step completed">
+
+                <span>✓</span>
+
+                <small>Motorista</small>
+
+            </div>
+
+
+            <div class="progress-line active"></div>
+
+
+            <div class="progress-step active">
+
+                <span>2</span>
+
+                <small>Caminhão</small>
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <span>3</span>
+
+                <small>Checklist</small>
+
+            </div>
+
+
+            <div class="progress-line"></div>
+
+
+            <div class="progress-step">
+
+                <span>4</span>
+
+                <small>Confirmação</small>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORMULÁRIO -->
+
+        <form id="caminhaoForm">
+
+            <h2>Informações do Transporte</h2>
+
+
+            <!-- DT -->
+
+            <div class="form-group">
+
+                <label for="dt">
+                    DT *
+                </label>
+
+                <input
+                    type="text"
+                    id="dt"
+                    name="dt"
+                    placeholder="Número da DT"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+
+            <!-- TRANSPORTADORA -->
+
+            <div class="form-group">
+
+                <label for="transportadora">
+                    Transportadora *
+                </label>
+
+                <input
+                    type="text"
+                    id="transportadora"
+                    name="transportadora"
+                    placeholder="Nome da transportadora"
+                    autocomplete="organization"
+                    required
+                >
+
+            </div>
+
+
+            <!-- CAVALO -->
+
+            <div class="form-group">
+
+                <label for="placaCavalo">
+                    Placa Cavalo / Truck *
+                </label>
+
+                <input
+                    type="text"
+                    id="placaCavalo"
+                    name="placaCavalo"
+                    maxlength="7"
+                    placeholder="ABC1D23"
+                    autocomplete="off"
+                    required
+                >
+
+            </div>
+
+
+            <!-- CARRETA 01 -->
+
+            <div class="form-group">
+
+                <label for="placaCarreta01">
+                    Placa Carreta 01
+                </label>
+
+                <input
+                    type="text"
+                    id="placaCarreta01"
+                    name="placaCarreta01"
+                    maxlength="7"
+                    placeholder="ABC1D23"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- CARRETA 02 -->
+
+            <div class="form-group">
+
+                <label for="placaCarreta02">
+                    Placa Carreta 02
+                </label>
+
+                <input
+                    type="text"
+                    id="placaCarreta02"
+                    name="placaCarreta02"
+                    maxlength="7"
+                    placeholder="ABC1D23"
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <!-- TIPO DE VEÍCULO -->
+
+            <div class="question-group">
+
+                <label>
+                    Tipo de Veículo *
+                </label>
+
+
+                <div class="choice-buttons">
+
+                    <label class="choice-button">
+
+                        <input
+                            type="radio"
+                            name="tipoVeiculo"
+                            value="Baú"
+                            required
+                        >
+
+                        <span>BAÚ</span>
+
+                    </label>
+
+
+                    <label class="choice-button">
+
+                        <input
+                            type="radio"
+                            name="tipoVeiculo"
+                            value="Sider"
+                        >
+
+                        <span>SIDER</span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPILHADEIRA -->
+
+            <div class="question-group">
+
+                <label>
+                    Autoriza Entrada de Empilhadeira? *
+                </label>
+
+
+                <div class="choice-buttons">
+
+                    <label class="choice-button">
+
+                        <input
+                            type="radio"
+                            name="empilhadeira"
+                            value="Sim"
+                            required
+                        >
+
+                        <span>SIM</span>
+
+                    </label>
+
+
+                    <label class="choice-button">
+
+                        <input
+                            type="radio"
+                            name="empilhadeira"
+                            value="Não"
+                        >
+
+                        <span>NÃO</span>
+
+                    </label>
+
+
+                    <label class="choice-button">
+
+                        <input
+                            type="radio"
+                            name="empilhadeira"
+                            value="N/A"
+                        >
+
+                        <span>N/A</span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- BOTÕES -->
+
+            <div class="button-row">
+
+                <button
+                    type="button"
+                    class="btn-secondary"
+                    id="btnVoltar"
+                >
+                    Voltar
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn-primary"
+                    id="btnAvancar"
+                >
+                    Avançar
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<script src="caminhao.js"></script>
+
+</body>
+
+</html>
