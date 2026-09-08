@@ -2190,6 +2190,10 @@ async function abrirDetalhesPorLinha(
             registro
         );
 
+    setTimeout(
+    desenharAssinaturasAdmin,
+    0
+);
 
     abrirModal();
 
@@ -2402,7 +2406,7 @@ function gerarHTMLDetalhes(
                     )}
 
                     ${gerarReviewItemSimNao(
-                        'Autoriza entrada de empilhadeira',
+                        'Autoriza entrada de empilhadeira?',
                         obterValor(
                             registro,
                             'empilhadeira'
@@ -2792,6 +2796,169 @@ function gerarReviewItemSimNao(
 /* =========================================================
    ASSINATURA
    ========================================================= */
+function desenharAssinaturasAdmin() {
+
+    const canvasList =
+        document.querySelectorAll(
+            '.signature-admin-canvas'
+        );
+
+    canvasList.forEach(
+        function (canvas) {
+
+            const assinatura =
+                canvas.dataset.assinatura;
+
+            if (!assinatura) {
+                return;
+            }
+
+            canvas.width = 600;
+            canvas.height = 220;
+
+            const ctx =
+                canvas.getContext('2d');
+
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.strokeStyle = document.body.classList.contains('dark-mode')
+                    ? '#ffffff'
+                    : '#000000';
+
+            const tracos =
+                assinatura.includes('~')
+                    ? assinatura.split('~')
+                    : [assinatura];
+
+            let menorX = Infinity;
+            let maiorX = 0;
+
+            let menorY = Infinity;
+            let maiorY = 0;
+
+            tracos.forEach(function (traco) {
+
+                traco.split('|').forEach(function (ponto) {
+
+            const partes =
+                ponto.split(',');
+
+            if (partes.length !== 2) {
+                return;
+            }
+
+            const x = Number(partes[0]);
+            const y = Number(partes[1]);
+
+            if (
+                Number.isNaN(x) ||
+                Number.isNaN(y)
+            ) {
+                return;
+            }
+
+                    menorX = Math.min(
+                        menorX,
+                        x
+                    );
+
+                    maiorX = Math.max(
+                        maiorX,
+                        x
+                    );
+
+                    menorY = Math.min(
+                        menorY,
+                        y
+                    );
+
+                    maiorY = Math.max(
+                        maiorY,
+                        y
+                    );
+
+                });
+
+            });
+
+            const larguraAssinatura =
+                maiorX - menorX;
+
+            const alturaAssinatura =
+                maiorY - menorY;
+
+            const offsetX =
+                (
+                    canvas.width -
+                    larguraAssinatura
+                ) / 2 -
+                menorX;
+
+            const offsetY =
+                (
+                    canvas.height -
+                    alturaAssinatura
+                ) / 2 -
+                menorY;
+
+            tracos.forEach(
+                function (traco) {
+
+                    const pontos =
+                        traco.split('|');
+
+                    if (
+                        pontos.length < 2
+                    ) {
+                        return;
+                    }
+
+                    ctx.beginPath();
+
+                    pontos.forEach(
+                        function (
+                            ponto,
+                            indice
+                        ) {
+
+                            const [
+                                x,
+                                y
+                            ] =
+                                ponto
+                                .split(',')
+                                .map(Number);
+
+                            if (
+                                indice === 0
+                            ) {
+
+                                ctx.moveTo(
+                                x + offsetX,
+                                y + offsetY
+                                );
+
+                            } else {
+
+                                ctx.lineTo(
+                                x + offsetX,
+                                y + offsetY
+                                );
+                            }
+
+                        }
+                    );
+
+                    ctx.stroke();
+
+                }
+            );
+
+        }
+    );
+
+}
 
 function gerarHTMLAssinatura(
     registro
@@ -2859,47 +3026,27 @@ function gerarHTMLAssinatura(
 
     }
 
-
     if (
-        assinatura
-            .toUpperCase()
-            .startsWith('ASS-')
-    ) {
+        assinatura &&
+        assinatura.includes(',')
+    ){
 
-        return `
+    return `
 
-            <div class="digital-stamp">
+        <div
+            class="signature-canvas-container"
+        >
 
-                <div class="digital-stamp-inner">
+            <canvas
+                class="signature-admin-canvas"
+                data-assinatura="${escaparAtributo(assinatura)}"
+            ></canvas>
 
-                    <div class="digital-stamp-name">
-                        ${escaparHTML(nome)}
-                    </div>
+        </div>
 
-                    <div class="digital-stamp-cpf">
-                        CPF:
-                        ${escaparHTML(
-                            cpf ||
-                            'Não informado'
-                        )}
-                    </div>
+    `;
 
-                    <div class="digital-stamp-title">
-                        ASSINATURA DIGITAL
-                    </div>
-
-                    <div class="digital-stamp-date">
-                        ${escaparHTML(data)}
-                    </div>
-
-                </div>
-
-            </div>
-
-        `;
-
-    }
-
+}
 
     if (
         assinatura.startsWith(
@@ -2938,14 +3085,13 @@ function gerarHTMLAssinatura(
 /* =========================================================
    EDIÇÃO
    ========================================================= */
-
+   
 function abrirEdicaoPorLinha(
     linha
 ) {
 
     const registro =
         encontrarPorLinha(linha);
-
 
     if (!registro) {
 
@@ -2997,6 +3143,7 @@ function abrirEdicaoPorLinha(
 
     abrirModal();
 
+    setTimeout(desenharAssinaturasAdmin,100);  
 
     const form =
         document.getElementById(
@@ -3317,12 +3464,11 @@ function gerarFormularioEdicaoAdmin(
                         registro
                     )}
 
-                    ${gerarCampoSomenteLeitura(
-                        'assinatura',
-                        'Assinatura do Motorista',
-                        registro,
-                        true
+                    ${gerarCampoAssinatura(
+                        registro
                     )}
+
+                    
 
                     <div class="edit-note edit-field full">
 
@@ -3475,6 +3621,15 @@ function gerarCampoSelectSimNao(
                     Não
                 </option>
 
+                <option
+                    value="N/A"
+                    ${valor === 'na'
+                        ? 'selected'
+                        : ''}
+                >
+                    N/A
+                </option>
+
             </select>
 
         </div>
@@ -3521,6 +3676,40 @@ function gerarCampoSomenteLeitura(
 
 }
 
+function gerarCampoAssinatura(
+    registro
+) {
+
+    const assinatura =
+        obterValor(
+            registro,
+            'assinatura'
+        ) || '';
+
+    return `
+
+        <div class="edit-field full">
+
+            <label>
+                Assinatura do Motorista
+            </label>
+
+            <div
+                class="signature-canvas-container"
+            >
+
+                <canvas
+                    class="signature-admin-canvas"
+                    data-assinatura="${assinatura}"
+                ></canvas>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
 
 /* =========================================================
    SALVAR EDIÇÃO
