@@ -124,6 +124,7 @@ button {
     font-size: 14px;
 }
 
+
 .form-group {
     margin-bottom: 21px;
 }
@@ -228,6 +229,57 @@ button {
     cursor: not-allowed;
 }
 
+/* ============================================================
+   LOGIN - MODO ESCURO
+============================================================ */
+
+body.dark-mode .login-screen {
+    background:
+        radial-gradient(
+            circle at top left,
+            rgba(0, 132, 61, 0.15),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #0f172a 0%,
+            #111827 50%,
+            #1e293b 100%
+        );
+}
+
+body.dark-mode .login-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+}
+
+body.dark-mode .login-title h1 {
+    color: #ffffff;
+}
+
+body.dark-mode .login-title p {
+    color: #cbd5e1;
+}
+
+body.dark-mode .form-group label {
+    color: #f1f5f9;
+}
+
+body.dark-mode .form-group input {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #475569;
+}
+
+body.dark-mode .form-group input::placeholder {
+    color: #94a3b8;
+}
+
+body.dark-mode .login-error {
+    background: rgba(127, 29, 29, 0.3);
+    border-color: #ef4444;
+    color: #fecaca;
+}
 
 /* ============================================================
    PAINEL ADMINISTRATIVO
@@ -269,6 +321,10 @@ button {
     padding: 25px 20px;
 
     border-bottom: 1px solid #edf1ee;
+}
+
+body.dark-mode .sidebar-header{
+    border-color: #475569;
 }
 
 .sidebar-logo {
@@ -379,6 +435,10 @@ button {
     padding: 15px 13px 20px;
 
     border-top: 1px solid #edf1ee;
+}
+
+body.dark-mode .sidebar-footer{
+    border-color: #475569;
 }
 
 .logout-button {
@@ -499,7 +559,7 @@ body.dark-mode .admin-status {
 
     padding: 8px 11px;
 
-    border: 1px solid #dfe9e2;
+    border: 1px solid #475569;
     border-radius: 20px;
 
     background: #111827;
@@ -694,10 +754,12 @@ body.dark-mode {
 
 body.dark-mode .sidebar {
     background: #111827;
+    border-color: #475569
 }
 
 body.dark-mode .topbar {
     background: #1e293b;
+    border-color: #475569
 }
 
 body.dark-mode .panel,
@@ -705,6 +767,7 @@ body.dark-mode .stat-card,
 body.dark-mode .modal-card {
     background: #1e293b;
     color: #ffffff;
+    border-color: #475569;
 }
 
 body.dark-mode table {
@@ -742,12 +805,14 @@ body.dark-mode label,
 body.dark-mode td,
 body.dark-mode th {
     color: #e2e8f0 !important;
+    border-color: #475569;
 }
 
 /* Sidebar */
 
 body.dark-mode .sidebar {
     background: #111827;
+    border-color: #475569
 }
 
 body.dark-mode .sidebar strong {
@@ -885,33 +950,13 @@ body.dark-mode .status-neutral {
 }
 
 /* =========================================
-   MODAL
-========================================= */
-
-body.dark-mode .modal-header {
-    background: #1e293b;
-}
-
-body.dark-mode .modal-content {
-    background: #1e293b;
-    color: #e2e8f0;
-}
-
-body.dark-mode .modal-title,
-body.dark-mode #modalTitle {
-    color: #f8fafc !important;
-}
-
-body.dark-mode .modal-eyebrow {
-    color: #94a3b8 !important;
-}
-
-/* =========================================
    REVIEW
 ========================================= */
 
 body.dark-mode .review-item {
     color: #e2e8f0;
+    border-color: #475569;
+    background: #1e293b;
 }
 
 body.dark-mode .review-label {
@@ -923,7 +968,7 @@ body.dark-mode .review-value {
 }
 
 body.dark-mode .review-value.neutral {
-    color: #4ade80 !important;
+    color: #e2e8f0 !important;
 }
 
 body.dark-mode .review-value.yes {
@@ -966,17 +1011,38 @@ body.dark-mode .signature-empty-admin small {
     color: #94a3b8 !important;
 }
 
+body.dark-mode .signature-admin-image{
+    filter:
+        brightness(0)
+        invert(1);
+}
+
+/* =========================================
+   INFORMAÇÕES PROTEGISTAS NO EDITAR
+========================================= */
+body.dark-mode #edit_dataHora,
+body.dark-mode #edit_dataAssinatura,
+body.dark-mode #edit_assinatura,
+body.dark-mode .edit-note.edit-field.full{
+    background: #0f172a;
+    color: #f8fafc;
+    border-color: #475569;
+}
+
+
 /* =========================================
    MODAL
 ========================================= */
 
 body.dark-mode .modal-header {
-    background: #1e293b;
+    background: #334155;
+    color: #e2e8f0;
 }
 
 body.dark-mode .modal-content {
     background: #1e293b;
     color: #e2e8f0;
+    border-color: #475569;
 }
 
 body.dark-mode .modal-title,
@@ -988,38 +1054,6 @@ body.dark-mode .modal-eyebrow {
     color: #94a3b8 !important;
 }
 
-/* =========================================
-   REVIEW
-========================================= */
-
-body.dark-mode .review-item {
-    color: #e2e8f0;
-    background: #1e293b
-}
-
-body.dark-mode .review-label {
-    color: #94a3b8 !important;
-}
-
-body.dark-mode .review-value {
-    color: #e2e8f0;
-}
-
-body.dark-mode .review-value.neutral {
-    color: #e2e8f0 !important;
-}
-
-body.dark-mode .review-value.yes {
-    color: #4ade80 !important;
-}
-
-body.dark-mode .review-value.no {
-    color: #f87171 !important;
-}
-
-body.dark-mode .review-value.na{
-  color: #d79a15;
-}
 /* =========================================
    ASSINATURA
 ========================================= */
@@ -1041,15 +1075,22 @@ body.dark-mode .signature-empty-admin small {
 ========================================= */
 
 body.dark-mode .review-panel {
-    background: #1e293b;
+    
+    border-color: #475569;
+}
+
+body.dark-mode .review-panel-header{
+    border-color: #475569;
 }
 
 body.dark-mode .review-panel-header h3 {
     color: #f8fafc !important;
+    border-color: #475569;
 }
 
 body.dark-mode .review-panel-header p {
     color: #94a3b8 !important;
+    border-color: #475569;
 }
 
 /* ============================================================
@@ -1298,6 +1339,10 @@ body.dark-mode .review-panel-header p {
     padding: 16px 19px;
 
     border-bottom: 1px solid #edf1ee;
+}
+
+body.dark-mode .panel-header{
+    border-color: #475569;
 }
 
 .panel-header h3 {
@@ -1576,6 +1621,9 @@ tbody tr:last-child td {
     background: #ffffff;
 }
 
+body.dark-mode .modal-header{
+    border-color: #475569;
+}
 .modal-eyebrow {
     display: block;
 
@@ -1638,7 +1686,8 @@ tbody tr:last-child td {
 
 .review-panels {
     display: grid;
-
+    /*align-items: start; // CASO EU QUEIRA QUE O FUNDO PARE EXATAMENTE NO ÚLTIMO DADO REGISTRADO */
+    height: fit-content;
     grid-template-columns:
         repeat(2, minmax(0, 1fr));
 
@@ -1720,6 +1769,10 @@ tbody tr:last-child td {
     padding: 14px;
 }
 
+body.dark-mode .review-panel-body{
+    border-color: #475569;
+}
+
 .review-item {
     min-width: 0;
 
@@ -1792,7 +1845,29 @@ tbody tr:last-child td {
    ASSINATURA / CARIMBO
 ============================================================ */
 
-.review-signature-body {
+.signature-admin-canvas{
+
+    width: 100%;
+    max-width: 500px;
+
+    height: 220px;
+
+    border: 1px solid #d9e2dc;
+
+    border-radius: 12px;
+
+    background: #fff;
+}
+
+body.dark-mode .signature-admin-canvas {
+
+    background: #1e293b;
+
+    border-color: #475569;
+}
+
+.review-signature-body,
+#edit_assinatura {
     min-height: 190px;
 
     display: flex;
@@ -2017,6 +2092,10 @@ tbody tr:last-child td {
     overflow: hidden;
 }
 
+body.dark-mode .edit-section{
+    border-color: #475569;
+}
+
 .edit-section-title {
     padding: 12px 15px;
 
@@ -2036,6 +2115,10 @@ tbody tr:last-child td {
     gap: 14px;
 
     padding: 17px;
+}
+
+body.dark-mode .edit-grid{
+    background: #1e293b;
 }
 
 .edit-field {
