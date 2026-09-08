@@ -5,9 +5,6 @@
    Fluxo:
    Motorista → Caminhão → Checklist → Confirmação → Finalização
 
-   A assinatura é representada por um carimbo digital.
-   O carimbo SOMENTE aparece depois que o motorista clica
-   na área de assinatura.
 ============================================================ */
 
 const URL_PLANILHA =
@@ -21,14 +18,23 @@ const URL_PLANILHA =
 let dadosCadastro = {};
 let assinaturaConfirmada = false;
 
+//ASSINATURA DESENHADA (CANVAS)
+let assinaturaPontos = [];
+let desenhando = false;
+
 
 /* ============================================================
    INICIALIZAÇÃO
 ============================================================ */
 
-document.addEventListener("DOMContentLoaded", () => {
-    inicializarPagina();
-});
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        inicializarPagina();
+        configurarCanvasAssinatura();
+        configurarCampoCPF();
+    }
+);
 
 
 function inicializarPagina() {
@@ -289,8 +295,6 @@ function normalizarDados(dados) {
         assinatura:
             dados.assinatura || "",
 
-        assinaturaPontos:
-            dados.assinaturaPontos || null,
 
         dataHora:
             dados.dataHora || "",
@@ -383,367 +387,265 @@ function configurarBotoes() {
        "configurarAssinatura()".
     */
 
-    configurarCarimbo();
 }
 
-
 /* ============================================================
-   CONFIGURAÇÃO DO CARIMBO
+   REMOVER ASSINATURA DESENHADA (CANVAS)
 ============================================================ */
-
-function configurarCarimbo() {
-
-    const stampBox =
-        document.getElementById("stampBox");
-
-    const carimbo =
-        document.getElementById("carimbo");
-
-    const placeholder =
-        document.getElementById("stampPlaceholder");
-
-    const assinaturaRealizada =
-        document.getElementById("assinaturaRealizada");
-
-    const remover =
-        document.getElementById("removerAssinatura");
-
-
-    if (!stampBox || !carimbo) {
-        console.warn(
-            "Área de assinatura não encontrada."
-        );
-
-        return;
-    }
-
-
-    /*
-       Estado inicial:
-       NÃO existe assinatura.
-       O carimbo fica escondido.
-    */
-
-    assinaturaConfirmada = false;
-
-    carimbo.classList.add("hidden");
-    carimbo.style.display = "none";
-
-
-    if (placeholder) {
-        placeholder.classList.remove("hidden");
-        placeholder.style.display = "";
-    }
-
-
-    if (assinaturaRealizada) {
-        assinaturaRealizada.classList.add("hidden");
-    }
-
-
-    if (remover) {
-        remover.classList.add("hidden");
-    }
-
-
-    /*
-       Remove listeners antigos para evitar
-       múltiplos disparos caso a função seja chamada novamente.
-    */
-
-    const novoStampBox =
-        stampBox.cloneNode(true);
-
-    stampBox.parentNode.replaceChild(
-        novoStampBox,
-        stampBox
-    );
-
-
-    const area =
-        document.getElementById("stampBox");
-
-
-    /*
-       Clique do mouse / toque.
-    */
-
-    area.addEventListener(
-        "click",
-        () => {
-            confirmarAssinatura();
-        }
-    );
-
-
-    /*
-       Permite também usar Enter ou Espaço
-       quando a área estiver focada.
-    */
-
-    area.addEventListener(
-        "keydown",
-        (evento) => {
-
-            if (
-                evento.key === "Enter" ||
-                evento.key === " "
-            ) {
-
-                evento.preventDefault();
-
-                confirmarAssinatura();
-            }
-        }
-    );
-}
-
-
-/* ============================================================
-   CONFIRMAR ASSINATURA
-============================================================ */
-
-function confirmarAssinatura() {
-
-    const dados =
-        obterDadosCadastro();
-
-
-    if (!dados.nome) {
-
-        mostrarMensagem(
-            "Não foi possível identificar o nome do motorista.",
-            "error"
-        );
-
-        return;
-    }
-
-
-    if (assinaturaConfirmada) {
-        return;
-    }
-
-
-    assinaturaConfirmada = true;
-
-
-    const agora =
-        new Date();
-
-
-    const dataAssinatura =
-        formatarDataAtual(agora);
-
-
-    const carimbo =
-        document.getElementById("carimbo");
-
-    const placeholder =
-        document.getElementById("stampPlaceholder");
-
-    const nome =
-        document.getElementById("carimboNome");
-
-    const cpf =
-        document.getElementById("carimboCPF");
-
-    const data =
-        document.getElementById("carimboData");
-
-    const realizada =
-        document.getElementById("assinaturaRealizada");
-
-    const remover =
-        document.getElementById("removerAssinatura");
-
-    const stampBox =
-        document.getElementById("stampBox");
-
-
-    /*
-       Preenche o carimbo SOMENTE agora.
-    */
-
-    if (nome) {
-        nome.textContent =
-            dados.nome || "Nome do motorista";
-    }
-
-
-    if (cpf) {
-        cpf.textContent =
-            dados.cpf
-                ? `CPF: ${dados.cpf}`
-                : "CPF não informado";
-    }
-
-
-    if (data) {
-        data.textContent =
-            dataAssinatura;
-    }
-
-
-    /*
-       Esconde o texto inicial.
-    */
-
-    if (placeholder) {
-        placeholder.classList.add("hidden");
-    }
-
-
-    /*
-       Mostra o carimbo.
-    */
-
-    if (carimbo) {
-
-        carimbo.classList.remove("hidden");
-
-        carimbo.style.display = "block";
-
-
-        /*
-           Reinicia a animação.
-        */
-
-        carimbo.style.animation = "none";
-
-        void carimbo.offsetWidth;
-
-        carimbo.style.animation =
-            "baterCarimbo 0.18s ease-out forwards";
-    }
-
-
-    /*
-       Mostra confirmação.
-    */
-
-    if (realizada) {
-        realizada.classList.remove("hidden");
-    }
-
-
-    /*
-       Mostra botão de remoção.
-    */
-
-    if (remover) {
-        remover.classList.remove("hidden");
-    }
-
-
-    /*
-       Marca visualmente a área.
-    */
-
-    if (stampBox) {
-        stampBox.classList.add(
-            "assinatura-confirmada"
-        );
-    }
-
-
-    /*
-       Guarda o estado somente na memória.
-       A data oficial será gerada pelo Apps Script
-       no momento do cadastro.
-    */
-
-    dadosCadastro.assinatura =
-        "ASSINADO DIGITALMENTE";
-
-    dadosCadastro.assinaturaConfirmada =
-        true;
-
-
-    atualizarBotaoEnviar();
-
-
-    mostrarMensagem(
-        "Assinatura confirmada. Você já pode finalizar o cadastro.",
-        "success"
-    );
-}
-
-
-/* ============================================================
-   REMOVER ASSINATURA
-============================================================ */
-
 function removerAssinatura() {
 
-    assinaturaConfirmada = false;
-
-
-    const carimbo =
-        document.getElementById("carimbo");
-
-    const placeholder =
-        document.getElementById("stampPlaceholder");
-
-    const realizada =
-        document.getElementById("assinaturaRealizada");
-
-    const remover =
-        document.getElementById("removerAssinatura");
-
-    const stampBox =
-        document.getElementById("stampBox");
-
-
-    if (carimbo) {
-
-        carimbo.classList.add("hidden");
-
-        carimbo.style.display = "none";
-    }
-
-
-    if (placeholder) {
-
-        placeholder.classList.remove("hidden");
-
-        placeholder.style.display = "";
-    }
-
-
-    if (realizada) {
-        realizada.classList.add("hidden");
-    }
-
-
-    if (remover) {
-        remover.classList.add("hidden");
-    }
-
-
-    if (stampBox) {
-        stampBox.classList.remove(
-            "assinatura-confirmada"
+    const canvas =
+        document.getElementById(
+            'signatureCanvas'
         );
-    }
 
+    if (!canvas) return;
 
-    dadosCadastro.assinatura =
-        "";
+    const ctx =
+        canvas.getContext('2d');
 
-    dadosCadastro.assinaturaConfirmada =
-        false;
+        canvas.width = canvas.offsetWidth;
 
+        canvas.height = 220;
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    assinaturaPontos = [];
+
+    assinaturaConfirmada = false;
 
     atualizarBotaoEnviar();
 
-
     mostrarMensagem(
-        "Assinatura removida. Clique novamente na área para assinar.",
-        "info"
+        'Assinatura removida.',
+        'info'
     );
 }
+/* ============================================================
+   CONFIGURAÇÃO DO CAMPO CPF
+============================================================ */
+function configurarCampoCPF() {
 
+    const campo =
+        document.getElementById(
+            'editCPF'
+        );
+
+    if (!campo) {
+        return;
+    }
+
+    campo.addEventListener(
+        'input',
+        function () {
+
+            campo.value =
+                formatarCPF(
+                    campo.value
+                );
+
+        }
+    );
+
+}
+
+/* ============================================================
+   CONFIGURAÇÃO DA ASSINATURA DESENHADA (CANVAS)
+============================================================ */
+function configurarCanvasAssinatura() {
+
+    const canvas =
+        document.getElementById(
+            'signatureCanvas'
+        );
+
+    if (!canvas) return;
+
+    const ctx =
+        canvas.getContext('2d');
+
+    canvas.width = 600;
+    canvas.height = 220
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = '#000';
+
+    function pegarPosicao(evento) {
+
+        const rect =
+            canvas.getBoundingClientRect();
+
+        if (evento.touches) {
+
+            return {
+                x:
+                    evento.touches[0].clientX -
+                    rect.left,
+
+                y:
+                    evento.touches[0].clientY -
+                    rect.top
+            };
+        }
+
+        return {
+
+            x:
+                evento.clientX -
+                rect.left,
+
+            y:
+                evento.clientY -
+                rect.top
+        };
+    }
+
+    function iniciar(evento) {
+
+        desenhando = true;
+
+        const pos =
+            pegarPosicao(evento);
+
+        assinaturaPontos.push([
+            {
+                x: pos.x,
+                y: pos.y
+            }
+        ]);
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            pos.x,
+            pos.y
+        );
+    }
+
+    function mover(evento) {
+
+        if (!desenhando)
+            return;
+
+        evento.preventDefault();
+
+        const pos =
+            pegarPosicao(evento);
+
+        const ultimoTraco =
+            assinaturaPontos[
+                assinaturaPontos.length - 1
+            ];
+
+        ultimoTraco.push({
+            x: pos.x,
+            y: pos.y
+        });
+
+        ctx.lineTo(
+            pos.x,
+            pos.y
+        );
+
+        ctx.stroke();
+
+        assinaturaConfirmada =
+            true;
+
+        atualizarBotaoEnviar();
+    }
+
+    function finalizar() {
+        desenhando = false;
+    }
+    
+    window.addEventListener(
+        'mouseup',
+        finalizar
+    );
+
+    canvas.addEventListener(
+    'mousedown',
+    iniciar
+    );
+
+    canvas.addEventListener(
+    'mousemove',
+    mover
+    );  
+
+    canvas.addEventListener(
+        'touchstart',
+        function (evento) {
+
+            evento.preventDefault();
+
+            iniciar(evento);
+
+        },
+        { passive: false }
+    );
+
+    canvas.addEventListener(
+        'touchmove',
+        function (evento) {
+
+            evento.preventDefault();
+
+            mover(evento);
+
+        },
+        { passive: false }
+    );
+
+    canvas.addEventListener(
+        'touchend',
+        finalizar
+    );
+
+    document
+        .getElementById(
+            'removerAssinatura'
+        )
+        .addEventListener(
+            'click',
+            () => {
+
+                ctx.clearRect(
+                    0,
+                    0,
+                    canvas.width,
+                    canvas.height
+                );
+
+                assinaturaPontos = [];
+
+                assinaturaConfirmada = false;
+
+                atualizarBotaoEnviar();
+            }
+        );
+}
+
+function serializarAssinatura() {
+
+    return assinaturaPontos
+        .map(traco =>
+            traco
+                .map(
+                    p =>
+                        `${Math.round(p.x)},${Math.round(p.y)}`
+                )
+                .join('|')
+        )
+        .join('~');
+}
 
 /* ============================================================
    RENDERIZAÇÃO GERAL
@@ -754,8 +656,6 @@ function renderizarPagina() {
     renderizarResumo();
 
     preencherFormularioEdicao();
-
-    configurarCarimbo();
 
     atualizarBotaoEnviar();
 }
@@ -806,7 +706,9 @@ function renderizarResumo() {
 
                     ${gerarCardResposta(
                         "CPF",
-                        dados.cpf
+                        formatarCPF(
+                            dados.cpf
+                        )
                     )}
 
                     ${gerarCardResposta(
@@ -1144,7 +1046,9 @@ function preencherFormularioEdicao() {
 
     definirValor(
         "editCPF",
-        dados.cpf
+        formatarCPF(
+            dados.cpf
+        )
     );
 
     definirValor(
@@ -1609,14 +1513,6 @@ function salvarEdicao() {
 
     cancelarEdicao();
 
-
-    /*
-       Reconfigura o carimbo para o estado inicial.
-    */
-
-    configurarCarimbo();
-
-
     atualizarBotaoEnviar();
 
 
@@ -1675,7 +1571,7 @@ async function finalizarCadastro() {
 
     if (!assinaturaConfirmada) {
         mostrarMensagem(
-            'Clique no carimbo para confirmar a assinatura digital.',
+            'Realize a sua assinatura no campo abaixo.',
             'erro'
         );
 
@@ -1684,6 +1580,8 @@ async function finalizarCadastro() {
     }
 
     const dados = obterDadosCadastro();
+
+    dados.assinatura = serializarAssinatura();
 
     if (!dados || !dados.nome) {
         mostrarMensagem(
@@ -1766,6 +1664,9 @@ async function finalizarCadastro() {
             );
         }
 
+    const assinaturaDesenhada =
+    dados.assinatura;
+
         /*
          * Cadastro realizado com sucesso.
          */
@@ -1801,7 +1702,9 @@ async function finalizarCadastro() {
         }
 
         mostrarSucesso(
-            resultado
+            resultado,
+            assinaturaDesenhada,
+            dados
         );
 
     } catch (erro) {
@@ -1832,7 +1735,7 @@ async function finalizarCadastro() {
    SUCESSO
 ============================================================ */
 
-function mostrarSucesso(resultado) {
+function mostrarSucesso(resultado, assinaturaDesenhada, dados) {
 
     const main =
         document.querySelector("main");
@@ -1885,83 +1788,233 @@ function mostrarSucesso(resultado) {
                 </p>
 
 
-                <div
-                    style="
-                        margin: 25px auto;
-                        max-width: 420px;
-                        padding: 20px;
-                        border: 3px double #bd2929;
-                        border-radius: 6px;
-                        color: #bd2929;
-                        background: white;
-                        font-family: 'Courier New', monospace;
-                        font-weight: bold;
-                        text-transform: uppercase;
-                    "
-                >
+<div
+    style="
+        max-width: 500px;
+        margin: 25px auto;
+        text-align: center;
+    "
+>
 
-                    <div
-                        style="
-                            font-size: 13px;
-                            margin-bottom: 8px;
-                        "
-                    >
-                        ASSINADO DIGITALMENTE
-                    </div>
+    <div
+        style="
+            color:#166534;
+            font-size:16px;
+            font-weight:700;
+            margin-bottom:12px;
+        "
+    >
+        ✓ ASSINATURA REGISTRADA
+    </div>
 
-                    <div
-                        style="
-                            font-size: 18px;
-                            word-break: break-word;
-                        "
-                    >
-                        ${escapeHTML(
-                            dados.nome || ""
-                        )}
-                    </div>
+    <canvas
+        id="successSignatureCanvas"
+        width="600"
+        height="220"
+        style="
+            width:100%;
+            max-width:500px;
+            height:220px;
+            border:1px solid #d9e2dc;
+            border-radius:12px;
+            background:#ffffff;
+        "
+    ></canvas>
 
-                    <div
-                        style="
-                            font-size: 13px;
-                            margin-top: 5px;
-                        "
-                    >
-                        CPF:
-                        ${escapeHTML(
-                            dados.cpf || ""
-                        )}
-                    </div>
+        <div
+            style="
+                margin-top:12px;
+                font-size:20px;
+                font-weight:bold;
+            "
+        >
+            ${escapeHTML(
+                dados.nome || ""
+            )}
+        </div>
 
-                    <div
-                        style="
-                            font-size: 12px;
-                            margin-top: 8px;
-                        "
-                    >
-                        ${escapeHTML(
-                            String(dataResultado)
-                        )}
-                    </div>
+        <div
+            style="
+                margin-top:4px;
+                font-size:14px;
+            "
+        >
+            CPF:
+            ${escapeHTML(
+                formatarCPF(
+                    dados.cpf || ""
+                )
+            )}
+        </div>
 
-                </div>
+        <div
+            style="
+                margin-top:6px;
+                font-size:13px;
+            "
+        >
+            ${escapeHTML(
+                String(dataResultado)
+            )}
+        </div>
 
-
-                <p
-                    style="
-                        margin-top: 15px;
-                    "
-                >
-                    Você pode prosseguir conforme
-                    orientação da unidade.
-                </p>
+    </div>
 
             </div>
 
         </section>
     `;
+
+    setTimeout(() => {
+
+    desenharAssinaturaSucesso(
+        assinaturaDesenhada
+    );
+
+}, 0);
 }
 
+function desenharAssinaturaSucesso(
+    assinatura
+) {
 
+    const canvas =
+        document.getElementById(
+            'successSignatureCanvas'
+        );
+
+    if (
+        !canvas ||
+        !assinatura
+    ) {
+        return;
+    }
+
+    const ctx =
+        canvas.getContext('2d');
+
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = document.body.classList.contains('dark-mode')
+            ? '#fff'
+            : '#000';
+       
+    const tracos =
+        assinatura.split('~');
+
+    let menorX = Infinity;
+    let maiorX = 0;
+
+    let menorY = Infinity;
+    let maiorY = 0;
+
+    tracos.forEach(function (traco) {
+
+        traco.split('|').forEach(function (ponto) {
+
+            const [x, y] =
+                ponto
+                .split(',')
+                .map(Number);
+
+            menorX = Math.min(
+                menorX,
+                x
+            );
+
+            maiorX = Math.max(
+                maiorX,
+                x
+            );
+
+            menorY = Math.min(
+                menorY,
+                y
+            );
+
+            maiorY = Math.max(
+                maiorY,
+                y
+            );
+
+        });
+
+    });
+
+    const larguraAssinatura =
+        maiorX - menorX;
+
+    const alturaAssinatura =
+        maiorY - menorY;
+
+    const offsetX =
+        (
+            canvas.width -
+            larguraAssinatura
+        ) / 2 -
+        menorX;
+
+    const offsetY =
+        (
+            canvas.height -
+            alturaAssinatura
+        ) / 2 -
+        menorY;
+
+    tracos.forEach(
+        function (traco) {
+
+            const pontos =
+                traco.split('|');
+
+            if (
+                pontos.length < 2
+            ) {
+                return;
+            }
+
+            ctx.beginPath();
+
+            pontos.forEach(
+                function (
+                    ponto,
+                    indice
+                ) {
+
+                    const [
+                        x,
+                        y
+                    ] =
+                        ponto
+                        .split(',')
+                        .map(Number);
+
+                    if (
+                        indice === 0
+                    ) {
+
+                        ctx.moveTo(
+                        x + offsetX,
+                        y + offsetY
+                        );
+
+                    } else {
+
+                        ctx.lineTo(
+                        x + offsetX,
+                        y + offsetY
+                        );
+                    }
+
+                }
+            );
+
+            ctx.stroke();
+
+        }
+    );
+
+}
 /* ============================================================
    LIMPAR SESSION STORAGE
 ============================================================ */
@@ -2028,8 +2081,7 @@ function atualizarBotaoEnviar() {
 
 function destacarAreaAssinatura() {
 
-    const area =
-        document.getElementById("stampBox");
+const area = document.getElementById("signatureCanvas");
 
 
     if (!area) {
@@ -2552,9 +2604,6 @@ function escapeHTML(valor) {
 /* ============================================================
    EXPORTAÇÕES
 ============================================================ */
-
-window.confirmarAssinatura =
-    confirmarAssinatura;
 
 window.removerAssinatura =
     removerAssinatura;
