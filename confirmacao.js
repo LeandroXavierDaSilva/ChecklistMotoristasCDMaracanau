@@ -58,7 +58,7 @@ function carregarDadosCadastro() {
         "dadosCadastro",
         "cadastro",
         "dadosMotorista",
-        "motoristaCadastro",
+        "cadastroMotorista",
         "formularioCadastro"
     ];
 
@@ -469,8 +469,8 @@ function configurarCanvasAssinatura() {
     const ctx =
         canvas.getContext('2d');
 
-    canvas.width = 600;
-    canvas.height = 220
+    canvas.width = canvas.offsetWidth;
+    canvas.height = 220;
 
     ctx.lineWidth = 2;
     ctx.lineCap = 'round';
@@ -570,15 +570,32 @@ function configurarCanvasAssinatura() {
         finalizar
     );
 
-    canvas.addEventListener(
-    'mousedown',
-    iniciar
+    window.addEventListener(
+        'touchend',
+        finalizar
     );
 
     canvas.addEventListener(
-    'mousemove',
-    mover
-    );  
+        'mousedown',
+        iniciar
+    );
+
+    canvas.addEventListener(
+        'mousemove',
+        mover
+    );
+
+    canvas.addEventListener(
+        'touchstart',
+        iniciar,
+        { passive: false }
+    );
+
+    canvas.addEventListener(
+        'touchmove',
+        mover,
+        { passive: false }
+    );
 
     canvas.addEventListener(
         'touchstart',
@@ -1533,7 +1550,7 @@ function salvarDadosSessionStorage() {
         "dadosCadastro",
         "cadastro",
         "dadosMotorista",
-        "motoristaCadastro",
+        "cadastroMotorista",
         "formularioCadastro"
     ];
 
@@ -1686,7 +1703,7 @@ async function finalizarCadastro() {
             );
 
             sessionStorage.removeItem(
-                'motoristaCadastro'
+                'cadastroMotorista'
             );
 
             sessionStorage.removeItem(
@@ -1744,11 +1761,6 @@ function mostrarSucesso(resultado, assinaturaDesenhada, dados) {
     if (!main) {
         return;
     }
-
-
-    const dados =
-        obterDadosCadastro();
-
 
     const dataResultado =
         resultado?.dataHora ||
